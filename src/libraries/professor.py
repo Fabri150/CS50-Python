@@ -2,8 +2,28 @@ import random
 
 def main():
     level = get_level()
-    generate_integer(level)
-
+    score = 0
+    for i in range(10):
+        wrong = 0
+        x = generate_integer(level)
+        y = generate_integer(level)
+        while True:
+            try:
+                guess = int(input(f"{x} + {y} = "))
+            except ValueError:
+                guess = None
+            if guess == x + y:
+                score += 1
+                break
+            else:
+                wrong += 1
+                print('EEE')
+                if wrong < 3:
+                    continue
+                else:
+                    print(f"{x} + {y} = {x + y}")
+                    break
+    print("Score:", score)
 
 def get_level():
     while True:
@@ -17,19 +37,17 @@ def get_level():
             pass
 
 def generate_integer(level):
-    score = 0
-    for i in range(10):
-        if level == 1:
-            x = random.randint(0, 10)
-            y = random.randint(0, 10)
-            guess = int(input(f"{x} + {y} = "))
-            if guess == x + y:
-                score += 1
-                continue
+            if level == 1:
+                number = random.randint(0, 9)
+                return number
+            elif level == 2:
+                number = random.randint(10, 99)
+                return number
+            elif level == 3:
+                number = random.randint(100, 999)
+                return number
             else:
-                print('EEE')
-                continue
-    print("Score: ", score)
+                raise ValueError
 
 if __name__ == "__main__":
     main()
